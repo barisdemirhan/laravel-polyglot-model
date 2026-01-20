@@ -1,0 +1,21 @@
+# Laravel Model Translations
+
+/vendor/
+/node_modules/
+/.idea/
+/.vscode/
+.DS_Store
+*.cache
+*.log
+composer.lock
+package-lock.json
+yarn.lock
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+.env
+.env.*
+!.env.example
+docs/node_modules
+docs/.vitepress/cache

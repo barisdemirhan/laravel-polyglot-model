@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create(config('model-translations.table_name', 'translations'), function (Blueprint $table) {
+            $table->id();
+            $table->morphs('translatable');
+            $table->string('field');
+            $table->string('locale', 10);
+            $table->text('value');
+            $table->timestamps();
+
+            // Composite index for fast lookups
+            $table->index(
+                ['translatable_type', 'translatable_id', 'field', 'locale'],
+                'translations_main_idx'
+            );
+
+            // Index for field and locale queries
+            $table->index(['field', 'locale'], 'translations_field_locale_idx');
+
+            // Unique constraint to prevent duplicate translations
+            $table->unique(
+                ['translatable_type', 'translatable_id', 'field', 'locale'],
+                'translations_unique_idx'
+            );
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists(config('model-translations.table_name', 'translations'));
+    }
+};
