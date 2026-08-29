@@ -25,8 +25,7 @@ class HasTranslationsTraitTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_returns_original_value_for_source_locale(): void
+    public function test_it_returns_original_value_for_source_locale(): void
     {
         App::setLocale('en');
 
@@ -34,16 +33,14 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertEquals('english-slug', $this->post->slug);
     }
 
-    /** @test */
-    public function it_can_set_and_get_translation(): void
+    public function test_it_can_set_and_get_translation(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
 
         $this->assertEquals('Türkçe Başlık', $this->post->getTranslate('title', 'tr'));
     }
 
-    /** @test */
-    public function it_returns_translation_via_magic_getter(): void
+    public function test_it_returns_translation_via_magic_getter(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
 
@@ -52,8 +49,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertEquals('Türkçe Başlık', $this->post->title);
     }
 
-    /** @test */
-    public function it_falls_back_to_fallback_locale(): void
+    public function test_it_falls_back_to_fallback_locale(): void
     {
         // No German translation exists, should fall back to English
         App::setLocale('de');
@@ -61,8 +57,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertEquals('English Title', $this->post->title);
     }
 
-    /** @test */
-    public function it_can_check_if_translation_exists(): void
+    public function test_it_can_check_if_translation_exists(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
 
@@ -71,8 +66,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertTrue($this->post->hasTranslation('title', 'en')); // Source has value
     }
 
-    /** @test */
-    public function it_can_check_if_model_has_any_translations(): void
+    public function test_it_can_check_if_model_has_any_translations(): void
     {
         $this->assertFalse($this->post->hasAnyTranslations());
 
@@ -81,8 +75,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertTrue($this->post->hasAnyTranslations());
     }
 
-    /** @test */
-    public function it_can_check_required_fields_for_locale(): void
+    public function test_it_can_check_required_fields_for_locale(): void
     {
         // Required fields: title, slug
         $this->assertFalse($this->post->hasAllRequiredFieldsForLocale('tr'));
@@ -94,8 +87,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertTrue($this->post->hasAllRequiredFieldsForLocale('tr'));
     }
 
-    /** @test */
-    public function it_can_get_all_translations(): void
+    public function test_it_can_get_all_translations(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
         $this->post->setTranslate('title', 'de', 'Deutscher Titel');
@@ -108,8 +100,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertEquals('Deutscher Titel', $translations['title']['de']);
     }
 
-    /** @test */
-    public function it_can_get_field_translations(): void
+    public function test_it_can_get_field_translations(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
         $this->post->setTranslate('title', 'de', 'Deutscher Titel');
@@ -123,8 +114,7 @@ class HasTranslationsTraitTest extends TestCase
         ], $translations);
     }
 
-    /** @test */
-    public function it_can_get_missing_locales(): void
+    public function test_it_can_get_missing_locales(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
 
@@ -136,8 +126,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertNotContains('tr', $missing);
     }
 
-    /** @test */
-    public function it_can_set_preferred_language(): void
+    public function test_it_can_set_preferred_language(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
 
@@ -148,8 +137,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertEquals('Türkçe Başlık', $title);
     }
 
-    /** @test */
-    public function it_excludes_translation_when_model_is_excluded(): void
+    public function test_it_excludes_translation_when_model_is_excluded(): void
     {
         $excludedPost = Post::create([
             'title' => 'Excluded Title',
@@ -165,8 +153,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertEquals('Excluded Title', $excludedPost->title);
     }
 
-    /** @test */
-    public function it_deletes_translations_when_model_is_deleted(): void
+    public function test_it_deletes_translations_when_model_is_deleted(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
 
@@ -182,16 +169,14 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertEquals(0, $remaining);
     }
 
-    /** @test */
-    public function it_throws_exception_for_non_translatable_field(): void
+    public function test_it_throws_exception_for_non_translatable_field(): void
     {
         $this->expectException(TranslationException::class);
 
         $this->post->setTranslate('non_existent_field', 'tr', 'Value');
     }
 
-    /** @test */
-    public function it_throws_exception_when_setting_translation_on_unpersisted_model(): void
+    public function test_it_throws_exception_when_setting_translation_on_unpersisted_model(): void
     {
         $this->expectException(TranslationException::class);
 
@@ -199,8 +184,7 @@ class HasTranslationsTraitTest extends TestCase
         $newPost->setTranslate('title', 'tr', 'Yeni Gönderi');
     }
 
-    /** @test */
-    public function it_validates_locale_in_strict_mode(): void
+    public function test_it_validates_locale_in_strict_mode(): void
     {
         config(['polyglot-model.strict_locale' => true]);
 
@@ -209,8 +193,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->post->setTranslate('title', 'invalid_locale', 'Value');
     }
 
-    /** @test */
-    public function it_can_delete_translation_by_setting_null(): void
+    public function test_it_can_delete_translation_by_setting_null(): void
     {
         $this->post->setTranslate('title', 'tr', 'Türkçe Başlık');
         $this->assertTrue($this->post->hasTranslation('title', 'tr'));
@@ -219,8 +202,7 @@ class HasTranslationsTraitTest extends TestCase
         $this->assertFalse($this->post->hasTranslation('title', 'tr'));
     }
 
-    /** @test */
-    public function it_can_update_existing_translation(): void
+    public function test_it_can_update_existing_translation(): void
     {
         $this->post->setTranslate('title', 'tr', 'İlk Başlık');
         $this->assertEquals('İlk Başlık', $this->post->getTranslate('title', 'tr'));

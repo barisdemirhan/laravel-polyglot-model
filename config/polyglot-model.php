@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+use PolyglotModel\Models\Translation;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +83,7 @@ return [
     | Your model should extend the default Translation model.
     |
     */
-    'model' => PolyglotModel\Models\Translation::class,
+    'model' => Translation::class,
 
     /*
     |--------------------------------------------------------------------------
