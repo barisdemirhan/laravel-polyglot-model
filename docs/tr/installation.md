@@ -3,7 +3,7 @@
 ## Gereksinimler
 
 - PHP 8.1 veya üzeri
-- Laravel 10.x, 11.x veya 12.x
+- Laravel 10.x, 11.x, 12.x veya 13.x
 
 ## Composer ile Kurulum
 
