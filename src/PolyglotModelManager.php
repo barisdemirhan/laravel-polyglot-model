@@ -93,7 +93,7 @@ class PolyglotModelManager
      */
     public function getTranslationModel(): string
     {
-        return config('polyglot-model.model', \PolyglotModel\Models\Translation::class);
+        return config('polyglot-model.model', Models\Translation::class);
     }
 
     /**

@@ -14,8 +14,7 @@ use PolyglotModel\Tests\TestCase;
 
 class TranslationModelTest extends TestCase
 {
-    /** @test */
-    public function it_dispatches_event_when_translation_is_created(): void
+    public function test_it_dispatches_event_when_translation_is_created(): void
     {
         Event::fake([TranslationCreated::class]);
 
@@ -25,8 +24,7 @@ class TranslationModelTest extends TestCase
         Event::assertDispatched(TranslationCreated::class);
     }
 
-    /** @test */
-    public function it_dispatches_event_when_translation_is_updated(): void
+    public function test_it_dispatches_event_when_translation_is_updated(): void
     {
         Event::fake([TranslationUpdated::class]);
 
@@ -37,8 +35,7 @@ class TranslationModelTest extends TestCase
         Event::assertDispatched(TranslationUpdated::class);
     }
 
-    /** @test */
-    public function it_dispatches_event_when_translation_is_deleted(): void
+    public function test_it_dispatches_event_when_translation_is_deleted(): void
     {
         Event::fake([TranslationDeleted::class]);
 
@@ -49,8 +46,7 @@ class TranslationModelTest extends TestCase
         Event::assertDispatched(TranslationDeleted::class);
     }
 
-    /** @test */
-    public function it_does_not_dispatch_events_when_disabled(): void
+    public function test_it_does_not_dispatch_events_when_disabled(): void
     {
         config(['polyglot-model.events.enabled' => false]);
 
@@ -62,8 +58,7 @@ class TranslationModelTest extends TestCase
         Event::assertNotDispatched(TranslationCreated::class);
     }
 
-    /** @test */
-    public function it_can_search_translatable_field(): void
+    public function test_it_can_search_translatable_field(): void
     {
         $post1 = Post::create(['title' => 'Laravel Tips', 'slug' => 'laravel-tips']);
         $post2 = Post::create(['title' => 'PHP Guide', 'slug' => 'php-guide']);
@@ -80,8 +75,7 @@ class TranslationModelTest extends TestCase
         $this->assertEquals($post1->id, $results->first()->id);
     }
 
-    /** @test */
-    public function it_can_search_multiple_translatable_fields(): void
+    public function test_it_can_search_multiple_translatable_fields(): void
     {
         $post = Post::create([
             'title' => 'Test Title',
@@ -97,8 +91,7 @@ class TranslationModelTest extends TestCase
         $this->assertCount(1, $results);
     }
 
-    /** @test */
-    public function it_can_filter_models_with_all_required_translations(): void
+    public function test_it_can_filter_models_with_all_required_translations(): void
     {
         $complete = Post::create(['title' => 'Complete', 'slug' => 'complete']);
         $complete->setTranslate('title', 'tr', 'Tamamlanmış');
@@ -114,8 +107,7 @@ class TranslationModelTest extends TestCase
         $this->assertEquals($complete->id, $results->first()->id);
     }
 
-    /** @test */
-    public function it_works_with_eager_loading(): void
+    public function test_it_works_with_eager_loading(): void
     {
         $post = Post::create(['title' => 'Test', 'slug' => 'test']);
         $post->setTranslate('title', 'tr', 'Test TR');
